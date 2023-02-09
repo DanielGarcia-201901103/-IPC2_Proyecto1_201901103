@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datosMarte>
+    <listaOrganismos>
+        <organismo>
+            <codigo>[valorAlfanumérico]orga 1</codigo>
+            <nombre>[valorAlfanumérico</nombre>
+        </organismo>
+        <!-- ... -->
+    </listaOrganismos>
+    <listadoMuestras>
+        <muestra>
+            <codigo>[valorAlfanumérico]</codigo>
+            <descripcion>[valorAlfanumérico]</descripcion>
+            <filas>[valorNumérico]</filas>
+            <columnas>[valorNumérico]</columnas>
+            <listadoCeldasVivas>
+                <celdaViva>
+                    <fila>[valorNumérico]</fila>
+                    <columna>[valorNumérico]</columna>
+                    <codigoOrganismo>[valorAlfanumérico]</codigoOrganismo>
+                </celdaViva>
+                <!-- ... -->
+            </listadoCeldasVivas>
+        </muestra>
+        <!-- ... -->
+    </listadoMuestras>
+</datosMarte>
