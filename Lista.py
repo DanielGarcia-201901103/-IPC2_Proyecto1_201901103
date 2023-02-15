@@ -21,7 +21,7 @@ class Lista:
         nodoTemporal = self.first
         while nodoTemporal != None:
             count +=1
-            print("Nodo no. "+ str(count)+"valor: "+ nodoTemporal.dato)
+            print("Nodo no. "+ str(count)+" valor: "+ str(nodoTemporal.dato.getNommbreOrganismo()))
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
 
 '''
