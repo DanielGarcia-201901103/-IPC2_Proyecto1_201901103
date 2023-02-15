@@ -78,7 +78,81 @@ def cargarArchivo():
     #lista_Muestras.printList()
 
 def seleccionarMuestra():
-    pass
+    menu.withdraw()  # cierra la ventana
+    seleccionarM = tk.Toplevel()
+    seleccionarM.title("SELECCIONAR MUESTRA")
+    seleccionarM.geometry("600x600")
+    seleccionarM.configure(bg="yellow")
+    seleccionarM.resizable(False, False)
+
+    style = ttk.Style()
+    style.theme_use("default")
+    style.configure("Treeview", background="silver",foreground="black", rowheight=25, fieldbackground="silver")
+    style.map("Treeview", background=[("selected", "green")])
+
+    scroll_bar = Scrollbar(seleccionarM)
+    scroll_bar.pack(side=RIGHT, fill=Y)
+
+    tablaDinamica = ttk.Treeview(seleccionarM, yscrollcommand=scroll_bar.set, columns=("col1", "col2", "col3"))
+    scroll_bar.config(command=tablaDinamica.yview)
+    tablaDinamica.column("#0", width=80)
+    tablaDinamica.column("col1", width=250, anchor=CENTER)
+    tablaDinamica.column("col2", width=80, anchor=CENTER)
+    tablaDinamica.column("col3", width=80, anchor=CENTER)
+    #tablaDinamica.column("col4", width=80, anchor=CENTER)
+    #tablaDinamica.column("col5", width=80, anchor=CENTER)
+    #tablaDinamica.column("col6", width=80, anchor=CENTER)
+
+    tablaDinamica.heading("#0", text="Código", anchor=CENTER)
+    tablaDinamica.heading("col1", text="Descripción", anchor=CENTER)
+    tablaDinamica.heading("col2", text="Filas", anchor=CENTER)
+    tablaDinamica.heading("col3", text="Columnas", anchor=CENTER)
+
+    #tablaDinamica.heading("col4", text="Semestre", anchor=CENTER)
+    #tablaDinamica.heading("col5", text="Créditos", anchor=CENTER)
+    #tablaDinamica.heading("col6", text="Estado", anchor=CENTER)
+    # agregando estilo a las filas
+    tablaDinamica.tag_configure("oddrow", background="white")
+    tablaDinamica.tag_configure("evenrow", background="lightblue")
+    # AGREGANDO LISTA DE OBJETOS A LA TABLA
+
+    '''iterador = 0
+    for j in objetos:
+        codi = j.codigo
+        nom = j.nombre
+        prerr = j.prerrequisitos
+        oblig = j.obligatorio
+        semes = j.semestre
+        cred = j.credito
+        est = j.estado
+
+        # MEJOR SE VA A MANEJAR CON WHILE PARA RECORRER LA LISTA OBJETOS.
+        if iterador % 2 == 0:
+            tablaDinamica.insert("", tk.END, text=codi, values=(
+                nom, prerr, oblig, semes, cred, est), tags=("evenrow",))
+        else:
+            tablaDinamica.insert("", tk.END, text=codi, values=(
+                nom, prerr, oblig, semes, cred, est), tags=("oddrow",))
+
+        iterador += 1'''
+    tablaDinamica.pack()
+
+    # /******************************Regresar A Menu*********************
+    def regresarMenu():
+        seleccionarM.withdraw()
+        menu.iconify()
+        menu.deiconify()
+
+    tk.Label(seleccionarM, text="Ingrese el codigo del ", bg="yellow", fg="black", font=("Calibri", 13)).place(x=275, y=270)
+    tk.Label(seleccionarM, text="Lista de Celdas Vivas:", bg="yellow", fg="black", font=("Calibri", 13)).place(x=275, y=300)
+    tk.Button(seleccionarM, text="Mostrar", width=15, anchor="c", bg="orange", fg="black", font=(
+            "Arial Black", 10), command=lambda: regresarMenu()).place(x=400, y=505)
+    
+    tk.Button(seleccionarM, text="Regresar", width=15, anchor="c", bg="orange", fg="black", font=(
+            "Arial Black", 10), command=lambda: regresarMenu()).place(x=400, y=550)
+
+    seleccionarM.mainloop()
+
 def actualizarMuestra():
     pass
 def crearMuestra():
@@ -109,7 +183,7 @@ if __name__ == '__main__':
     posición en la cual estarán ubicados dentro de la ventana, así como los metodos que harán las acciones al hacer click sobre el boton
     '''
     tk.Button(menu, text="Cargar archivo xml", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: cargarArchivo()).place(x=190, y=130)
-    tk.Button(menu, text="Seleccionar muestra", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: seleccionarMuestra()).place(x=190, y=175)
+    tk.Button(menu, text="Lista de muestras", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: seleccionarMuestra()).place(x=190, y=175)
     tk.Button(menu, text="Actualizar muestra", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: actualizarMuestra()).place(x=190, y=220)
     tk.Button(menu, text="Crear muestra", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: actualizarMuestra()).place(x=190, y=265)
     tk.Button(menu, text="Guardar archivo", width=20, anchor="c", bg="orange", fg="Black", font=("Arial Black", 10), command=lambda: actualizarMuestra()).place(x=190, y=310)
