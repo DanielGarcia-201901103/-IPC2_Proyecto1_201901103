@@ -15,13 +15,22 @@ class Lista:
             newNodo.before = self.final #el apuntador anterior apunta al nodo anterior  <---
             self.final = newNodo #el apuntador ultimo apunta al nuevo nodo
 
-    def printList(self):
+    def printListMuestra(self):
+        print("No. | Filas | Columnas | Codigo | Descripción"  )
         count = 0
         nodoTemporal = Nodo("")
         nodoTemporal = self.first
         while nodoTemporal != None:
             count +=1
+<<<<<<< Updated upstream
             print("Nodo no. "+ str(count)+" valor: "+ str(nodoTemporal.dato.getNommbreOrganismo()))
+=======
+<<<<<<< Updated upstream
+            print("Nodo no. "+ str(count)+"valor: "+ nodoTemporal.dato)
+=======
+            print(str(count) + "  | "+str(nodoTemporal.dato.getFilasMuestra()) + "  | "+ str(nodoTemporal.dato.getColumnasMuestra())+ "  | "+ str(nodoTemporal.dato.getCodigoMuestra())+ "  | "+ str(nodoTemporal.dato.getDescripcionMuestra()))
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
 
 '''
