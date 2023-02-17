@@ -50,7 +50,7 @@ def cargarArchivo():
         #recorriendo la listaa de celdas vivas
         celdasvivasdoc = documento.getElementsByTagName("celdaViva")
         lista_CeldasVivas = Lista()
-
+#Corregir el guardar la celda viva para cada muestra ya que se almacenan todas las celdas vivas sin importar de cual muestra es
         for celdavivadoc in celdasvivasdoc:
             celdaViva_fila = celdavivadoc.getElementsByTagName("fila")[0]
             celdaViva_columna = celdavivadoc.getElementsByTagName("columna")[0]
@@ -58,7 +58,6 @@ def cargarArchivo():
             #.......enviando los parametros al objeto y enviando el objeto a la lista
             objetoCeldaViva = CeldaViva(str(celdaViva_fila.firstChild.data), str(celdaViva_columna.firstChild.data), str(celdaViva_codigoOrganismo.firstChild.data))
             #Agregando celda viva a la lista de celdas vivas
-            lista_CeldasVivas.addFinalNode(objetoCeldaViva)
             if ((int(celdaViva_fila.firstChild.data) <= int(muestra_filas.firstChild.data)) and (int(celdaViva_columna.firstChild.data) <= int(muestra_columnas.firstChild.data))):
                 lista_CeldasVivas.addFinalNode(objetoCeldaViva)
                 contadorCeldaV = contadorCeldaV + 1
@@ -82,12 +81,10 @@ def cargarArchivo():
     #crear otro metodo imprimir para la lista de muestras
     #lista_Muestras.printList()
 
-def listaCeldasVivas():
+def colocarOrganismo():
     pass
-
 def actualizarMuestra():
     pass
-
 def crearMuestra():
     pass
 
@@ -96,20 +93,24 @@ def menuListaMuestras():
         try:
             print("\n------- Menu Lista de Muestras --------\n")
             #mostrar el listado de las muestras y elegir una opcion
-
             lista_Muestras.printListMuestra()
-
-            print("\n1. Mostrar lista de celdas Vivas"+"\n2. Actualizar Muestra"+"\n3. Crear Muestra"+"\n4. Regresar")
             # recibe la opcion ingresada y la guarda como entero
-            opcion2 = int(input("Ingrese una opcion: "))
+            
+            opcion2 = int(input("Para ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
             print()
-            if opcion2 == 1:
-                listaCeldasVivas()
-            elif opcion2 == 2:
+            print("\n------- Lista de Celdas Vivas --------\n")
+            lista_Muestras.recorrListMuestra(opcion2)
+            
+            print("\n1. Colocar organismo"+"\n2. Actualizar Muestra"+"\n3. Crear Muestra"+"\n4. Regresar")
+            opcionMenu = int(input("Ingrese una opción: ")) 
+            
+            if opcionMenu == 1:
+                colocarOrganismo()
+            elif opcionMenu == 2:
                 actualizarMuestra()
-            elif opcion2 == 3:
+            elif opcionMenu == 3:
                 crearMuestra()
-            elif opcion2 == 4:
+            elif opcionMenu == 4:
                 break
             else:
                 print("Ingrese una opcion correcta")

@@ -1,4 +1,5 @@
 class Muestra:
+
     def __init__(self, codigo_Muestra, descripcion_Muestra, filas_Muestra, columnas_Muestra, listado_CVivas):
         self.codigo_Muestra = codigo_Muestra
         self.descripcion_Muestra = descripcion_Muestra

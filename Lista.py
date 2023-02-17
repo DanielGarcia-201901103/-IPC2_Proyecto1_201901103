@@ -1,8 +1,8 @@
 from nodo import Nodo
 class Lista:
     def __init__(self):
-        self. first = None
-        self. final = None
+        self.first = None
+        self.final = None
 
     def addFinalNode(self, dato):
         newNodo = Nodo(dato) # se crea un nuevo nodo
@@ -24,3 +24,24 @@ class Lista:
             count +=1
             print(str(count) + "  | "+str(nodoTemporal.dato.getFilasMuestra()) + "  | "+ str(nodoTemporal.dato.getColumnasMuestra())+ "  | "+ str(nodoTemporal.dato.getCodigoMuestra())+ "  | "+ str(nodoTemporal.dato.getDescripcionMuestra()))
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+
+    def recorrListMuestra(self, rec):
+        print("No. | Filas | Columnas | Codigo Organismo"  )
+        count = 0
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            count +=1
+            if count == rec:
+                listaTemporal = nodoTemporal.dato.listado_CVivas
+                listaTemporal.recorrListaCViva()
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    
+    def recorrListaCViva(self):
+        count1 = 0
+        nodoTemporal1 = Nodo("")
+        nodoTemporal1 = self.first
+        while nodoTemporal1 != None:
+            count1 +=1
+            print(str(count1)+ "  | "+str(nodoTemporal1.dato.getFilaCeldaViva()))
+            nodoTemporal1 = nodoTemporal1.after
