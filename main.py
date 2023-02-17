@@ -48,9 +48,8 @@ def cargarArchivo():
         muestra_filas = muestradoc.getElementsByTagName("filas")[0]
         muestra_columnas = muestradoc.getElementsByTagName("columnas")[0]
         #recorriendo la listaa de celdas vivas
-        celdasvivasdoc = documento.getElementsByTagName("celdaViva")
+        celdasvivasdoc = muestradoc.getElementsByTagName("celdaViva")
         lista_CeldasVivas = Lista()
-#Corregir el guardar la celda viva para cada muestra ya que se almacenan todas las celdas vivas sin importar de cual muestra es
         for celdavivadoc in celdasvivasdoc:
             celdaViva_fila = celdavivadoc.getElementsByTagName("fila")[0]
             celdaViva_columna = celdavivadoc.getElementsByTagName("columna")[0]
