@@ -1,9 +1,10 @@
 class Muestra:
-    def __init__(self, codigo_Muestra, descripcion_Muestra, filas_Muestra, columnas_Muestra):
+    def __init__(self, codigo_Muestra, descripcion_Muestra, filas_Muestra, columnas_Muestra, listado_CVivas):
         self.codigo_Muestra = codigo_Muestra
         self.descripcion_Muestra = descripcion_Muestra
         self.filas_Muestra = filas_Muestra
         self.columnas_Muestra = columnas_Muestra
+        self.listado_CVivas = listado_CVivas
         
     def setCodigoMuestra(self, codigoM):
         self.codigo_Muestra = codigoM

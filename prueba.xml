@@ -2,22 +2,64 @@
 <datosMarte>
     <listaOrganismos>
         <organismo>
-            <codigo>[valorAlfanumérico]orga 1</codigo>
-            <nombre>[valorAlfanumérico</nombre>
+            <codigo>codigo 1</codigo>
+            <nombre>nombre 1</nombre>
+        </organismo>
+        <organismo>
+            <codigo>codigo 2</codigo>
+            <nombre>nombre 2</nombre>
+        </organismo>
+        <organismo>
+            <codigo>codigo 3</codigo>
+            <nombre>nombre 3</nombre>
         </organismo>
         <!-- ... -->
     </listaOrganismos>
     <listadoMuestras>
         <muestra>
-            <codigo>[valorAlfanumérico]</codigo>
-            <descripcion>[valorAlfanumérico]</descripcion>
-            <filas>[valorNumérico]</filas>
-            <columnas>[valorNumérico]</columnas>
+            <codigo>codigo muestra 1</codigo>
+            <descripcion>descripcion 1</descripcion>
+            <filas>18</filas>
+            <columnas>14</columnas>
             <listadoCeldasVivas>
                 <celdaViva>
-                    <fila>[valorNumérico]</fila>
-                    <columna>[valorNumérico]</columna>
-                    <codigoOrganismo>[valorAlfanumérico]</codigoOrganismo>
+                    <fila>9</fila>
+                    <columna>8</columna>
+                    <codigoOrganismo>codigo or 1</codigoOrganismo>
+                </celdaViva>
+                <celdaViva>
+                    <fila>10</fila>
+                    <columna>9</columna>
+                    <codigoOrganismo>codigo or 2</codigoOrganismo>
+                </celdaViva>
+                <celdaViva>
+                    <fila>11</fila>
+                    <columna>10</columna>
+                    <codigoOrganismo>codigo or 3</codigoOrganismo>
+                </celdaViva>
+                <!-- ... -->
+            </listadoCeldasVivas>
+        </muestra>
+        <muestra>
+            <codigo>codigo muestra 2</codigo>
+            <descripcion>descripcion 2</descripcion>
+            <filas>28</filas>
+            <columnas>28</columnas>
+            <listadoCeldasVivas>
+                <celdaViva>
+                    <fila>18</fila>
+                    <columna>14</columna>
+                    <codigoOrganismo>codigo or 1.1</codigoOrganismo>
+                </celdaViva>
+                <celdaViva>
+                    <fila>14</fila>
+                    <columna>7</columna>
+                    <codigoOrganismo>codigo or 2.2</codigoOrganismo>
+                </celdaViva>
+                <celdaViva>
+                    <fila>2</fila>
+                    <columna>5</columna>
+                    <codigoOrganismo>codigo or 3.3</codigoOrganismo>
                 </celdaViva>
                 <!-- ... -->
             </listadoCeldasVivas>
