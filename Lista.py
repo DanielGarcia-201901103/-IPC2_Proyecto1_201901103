@@ -1,8 +1,8 @@
 from nodo import Nodo
 class Lista:
     def __init__(self):
-        self. first = None
-        self. final = None
+        self.first = None
+        self.final = None
 
     def addFinalNode(self, dato):
         newNodo = Nodo(dato) # se crea un nuevo nodo
