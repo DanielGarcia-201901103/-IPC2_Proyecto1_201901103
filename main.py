@@ -97,7 +97,7 @@ def menuListaMuestras():
             lista_Muestras.printListMuestra()
             # recibe la opcion ingresada y la guarda como entero
             
-            opcion2 = int(input("Para ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
+            opcion2 = int(input("\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
             print()
             print("\n------- Lista de Celdas Vivas --------\n")
             lista_Muestras.recorrListMuestra(opcion2)
@@ -106,7 +106,8 @@ def menuListaMuestras():
             opcionMenu = int(input("Ingrese una opción: ")) 
             print()
             if opcionMenu == 1:
-                colocarOrganismo()
+                graficar()
+                #colocarOrganismo()
             elif opcionMenu == 2:
                 actualizarMuestra()
             elif opcionMenu == 3:
@@ -117,14 +118,37 @@ def menuListaMuestras():
                 print("Ingrese una opcion correcta")
         except ValueError:
             print("\nPor favor ingrese solo numeros")
-def graficar():
-    grafo = graphviz.Digraph('matriz',filename ='matriz.dot')
-    grafo.attr(rankdir = 'LR',size='8,5', ranksep="2", bgcolor = "lightgoldenrodyellow", margin = "0.1")
-    grafo.attr('node', shape= 'plaintext')
 
-    grafo.node("nombreNodo","hacer matriz")
-    
-    grafo.view(filename ="matriz.dot" ,directory="./Proyecto 1")
+def graficar():
+    fila = 18
+    columna = 12
+
+    grafico = open("matriz.dot","w")
+    cadena = '''digraph matriz{\n 
+    size=8.5; 
+    ranksep=2; 
+    bgcolor = lightgoldenrodyellow;
+    margin = 0.1;
+    node[ shape = record]; 
+    matriz [label = "{X\\\Y'''
+    aum = 1
+    aux = ''
+    while aum <= fila:
+        cadena = cadena + "|" + str(aum)
+        aux = aux + '|'
+        aum += 1
+    cadena = cadena + '}"'
+    aum1 = 1
+    cadena1 = ""
+    while aum1 <= columna:
+        cadena1 = cadena1 +'+"|{'+str(aum1)+ aux +'}"'
+        
+        aum1 += 1
+    cadena = cadena + cadena1 
+    cadena = cadena + "];}"
+    grafico.write(cadena)
+    grafico.close()
+
 def guardarArchivo():
     pass
 def inicializacion():
