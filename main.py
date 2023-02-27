@@ -11,7 +11,8 @@ import graphviz
 #variables globales
 lista_Organismos = Lista()
 lista_Muestras = Lista()
-
+filass = 0
+columnass = 0
 # leer archivo xml
 def cargarArchivo():
     #contadores para saber las cantidades
@@ -82,6 +83,8 @@ def cargarArchivo():
     #crear otro metodo imprimir para la lista de muestras
     #lista_Muestras.printList()
 
+def prosperidad():
+    pass
 def colocarOrganismo():
     pass
 def actualizarMuestra():
@@ -95,24 +98,33 @@ def menuListaMuestras():
             print("\n------- Menu Lista de Muestras --------\n")
             #mostrar el listado de las muestras y elegir una opcion
             lista_Muestras.printListMuestra()
+
             # recibe la opcion ingresada y la guarda como entero
             
             opcion2 = int(input("\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
             print()
             print("\n------- Lista de Celdas Vivas --------\n")
             lista_Muestras.recorrListMuestra(opcion2)
-            
-            print("\n1. Colocar organismo"+"\n2. Actualizar Muestra"+"\n3. Crear Muestra"+"\n4. Regresar")
+
+            f = lista_Muestras.getDatoMuestra(opcion2)
+            global filass 
+            filass= f.getFilasMuestra()
+            global columnass 
+            columnass = f.getColumnasMuestra()
+
+            graficar()
+            print("\n1. Ver prosperidad de cada organismo"+"\n2. Colocar organismo"+"\n3. Actualizar Muestra"+"\n4. Crear Muestra"+"\n5. Regresar")
             opcionMenu = int(input("Ingrese una opción: ")) 
             print()
             if opcionMenu == 1:
-                graficar()
-                #colocarOrganismo()
+                prosperidad()
             elif opcionMenu == 2:
-                actualizarMuestra()
+                colocarOrganismo()
             elif opcionMenu == 3:
-                crearMuestra()
+                actualizarMuestra()
             elif opcionMenu == 4:
+                crearMuestra()
+            elif opcionMenu == 5:
                 break
             else:
                 print("Ingrese una opcion correcta")
@@ -120,9 +132,9 @@ def menuListaMuestras():
             print("\nPor favor ingrese solo numeros")
 
 def graficar():
-    fila = 18
-    columna = 12
-
+    fila =    int(filass)
+    columna =    int(columnass)
+    #INICIA CON LA CREACIÓN DEL ARCHIVO Y LE AGREGA EL CONTENIDO CON LA VARIABLE
     grafico = open("matriz.dot","w")
     cadena = '''digraph matriz{\n 
     size=8.5; 
@@ -131,21 +143,28 @@ def graficar():
     margin = 0.1;
     node[ shape = record]; 
     matriz [label = "{X\\\Y'''
+    #CONTADOR PARA ENUMERAR LAS FILAS EN LA MATRIZ
     aum = 1
+    #Agrega el espacio en blanco de las filas y columnas
     aux = ''
     while aum <= fila:
         cadena = cadena + "|" + str(aum)
         aux = aux + '|'
         aum += 1
     cadena = cadena + '}"'
+    #CONTADOR PARA ENUMERAR LAS COLUMNAS EN LA MATRIZ
     aum1 = 1
+    #VARIABLE PARA AGREGAR LAS COLUMNAS Y SUS RESPECTIVOS ESPACIOS DE ACUERDO CON LAS FILAS
     cadena1 = ""
     while aum1 <= columna:
         cadena1 = cadena1 +'+"|{'+str(aum1)+ aux +'}"'
-        
         aum1 += 1
     cadena = cadena + cadena1 
-    cadena = cadena + "];}"
+    cadena = cadena + "];\n"
+    #en está parte debe ir la información del nodo de organismos
+    cadena = cadena + 'organismos[label = "A- NOMBRE\nB - Nombre \n x-lugares prosperos para el cultivo"];'
+    #Finaliza el cierre de llaves del digraph
+    cadena = cadena +"}"
     grafico.write(cadena)
     grafico.close()
 
@@ -187,4 +206,12 @@ actualizar-> informacion de la muestra
 crear -> muestra con los cambios introducidos
 guardar archivo ->con las muestras actualizadas con la misma estructura del archivo de entrada
 Inicializacion -> cargar un archivo desde 0, si se carga y existen datos cargados anteriormente deben continuar existiendo y debe aumentar la informacion en el sistema
+
+
+Pasos de graficos
+1. CUANDO SE SELECCIONE LA MUESTRA GENERAR IMAGEN DE TABLA DEL TAMAÑO DE FILA Y COLUMNA CORRESPONDIENTE > Ya está funcionando
+2. Obtener codigo de muestra y descripcion de la muestra y mostrarlos al lado de la tabla
+3. Obtener fila, columna y codigo de organismo de la lista de celdas vivas
+4. Comparar el codigo de organismo con el codigo de organismo almacenado en la lista de organismos, para obtener el nombre del organismo
+4. AGREGAR A LA TABLA LOS DATOS DE LAS CELDAS VIVAS DEL ORGANISMO QUE SELECIONÓ
 """

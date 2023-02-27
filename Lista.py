@@ -45,3 +45,17 @@ class Lista:
             count1 +=1
             print(str(count1)+ "   | "+str(nodoTemporal1.dato.getFilaCeldaViva())+ "   | "+str(nodoTemporal1.dato.getColumnaCeldaViva())+ "      | "+str(nodoTemporal1.dato.getCodigoCeldaOrganismoVivo()))
             nodoTemporal1 = nodoTemporal1.after
+
+    #OBTENER DATOS DE MUESTRAS
+    def getDatoMuestra(self, rec):
+        count = 0
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            count +=1
+            if count == rec:
+                return nodoTemporal.dato
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    
+    
+    
