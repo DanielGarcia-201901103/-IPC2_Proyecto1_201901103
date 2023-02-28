@@ -47,7 +47,7 @@ class Lista:
             nodoTemporal1 = nodoTemporal1.after
 
     #OBTENER DATOS DE MUESTRAS
-    def getDatoMuestra(self, rec):
+    def getDatoC(self, rec):
         count = 0
         nodoTemporal = Nodo("")
         nodoTemporal = self.first
@@ -57,5 +57,13 @@ class Lista:
                 return nodoTemporal.dato
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     
-    
+    def getListaCViva(self):
+        nodoTemporal1 = Nodo("") 
+        nodoTemporal1 = self.first
+        while nodoTemporal1 != None:
+            # ingresar la cadena y agregar a la cadena el nombre del organismo y luego retornar la cadena para ingresarla al .dot
+            print("   | "+str(nodoTemporal1.dato.getFilaCeldaViva())+ "   | "+str(nodoTemporal1.dato.getColumnaCeldaViva())+ "      | "+str(nodoTemporal1.dato.getCodigoCeldaOrganismoVivo()))
+            #borrar el print
+            nodoTemporal1 = nodoTemporal1.after
+
     
