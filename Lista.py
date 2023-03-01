@@ -3,10 +3,12 @@ class Lista:
     def __init__(self):
         self.first = None
         self.final = None
+        self.size = 0
 
     def addFinalNode(self, dato):
         newNodo = Nodo(dato) # se crea un nuevo nodo
         #si la lista está vacia
+        self.size += 1
         if self.first == None: #si la lista no tiene ningun dato
             self.first = newNodo #el apuntador primero apunta al nuevo nodo
             self.final = newNodo #el apuntador ultimo apunta al nuevo nodo
@@ -34,7 +36,9 @@ class Lista:
             count +=1
             if count == rec:
                 listaTemporal = nodoTemporal.dato.listado_CVivas
+                listaTemporal.BubbleSort()
                 listaTemporal.recorrListaCViva()
+
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     
     def recorrListaCViva(self):
@@ -76,7 +80,7 @@ class Lista:
             if count == rec:
                 return nodoTemporal.dato
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
-    
+    #modificar este metodo para que agrege las filas y columnas a la tabla
     def getListaCViva(self):
         nodoTemporal1 = Nodo("") 
         nodoTemporal1 = self.first
@@ -85,5 +89,32 @@ class Lista:
             print("   | "+str(nodoTemporal1.dato.getFilaCeldaViva())+ "   | "+str(nodoTemporal1.dato.getColumnaCeldaViva())+ "      | "+str(nodoTemporal1.dato.getCodigoCeldaOrganismoVivo()))
             #borrar el print
             nodoTemporal1 = nodoTemporal1.after
-
-    
+    #ordenamiento funcionando
+    def BubbleSort(self):
+        if self.size > 1:
+            while True:
+                actual = self.first
+                i = None  # anterior
+                j = self.first.after  # siguiente
+                cambio = False
+                while j != None:
+                    if int(actual.dato.getFilaCeldaViva())> int(j.dato.getFilaCeldaViva()):
+                        cambio = True
+                        if i != None:
+                            tmp = j.after
+                            i.after = j
+                            j.after = actual
+                            actual.after = tmp
+                        else:
+                            tmp2 = j.after
+                            self.first = j
+                            j.after = actual
+                            actual.after = tmp2
+                        i = j
+                        j = actual.after
+                    else:
+                        i = actual
+                        actual = j
+                        j = j.after
+                if not cambio:
+                    break

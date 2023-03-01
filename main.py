@@ -160,50 +160,8 @@ def obteniendodatos(opcion22):
     descripcionMS = f.getDescripcionMuestra()
     global lcv
     lcv = f.listado_CVivas
-    lcv.getListaCViva()
+    #lcv.getListaCViva()
 
-
-def graficar():
-    fila = int(filass)
-    columna = int(columnass)
-    # INICIA CON LA CREACIÓN DEL ARCHIVO Y LE AGREGA EL CONTENIDO CON LA VARIABLE
-    grafico = open("matriz.dot", "w")
-    cadena = '''digraph matriz{\n 
-    size=8.5; 
-    ranksep=2; 
-    
-    margin = 0.1;
-    node[ shape = record]; 
-    matriz [label = "{X\\\Y'''
-    # CONTADOR PARA ENUMERAR LAS FILAS EN LA MATRIZ
-    aum = 1
-    # Agrega el espacio en blanco de las filas y columnas
-    aux = ''
-    while aum <= fila:
-        cadena = cadena + "|" + str(aum)
-        aux = aux + '|'
-        aum += 1
-    cadena = cadena + '}"'
-    # CONTADOR PARA ENUMERAR LAS COLUMNAS EN LA MATRIZ
-    aum1 = 1
-    # VARIABLE PARA AGREGAR LAS COLUMNAS Y SUS RESPECTIVOS ESPACIOS DE ACUERDO CON LAS FILAS
-    cadena1 = ""
-    while aum1 <= columna:
-        cadena1 = cadena1 + '+"|{'+str(aum1) + aux + '}"'
-        aum1 += 1
-    cadena = cadena + cadena1
-    cadena = cadena + "];\n"
-    # en está parte debe ir la información del nodo de organismos
-    cadena = cadena + 'subgraph d{ m[style = "filled", shape = box3d, fillcolor= yellow,label = '
-    cadena = cadena + '"MUESTRA\ncodigo:'+ str(codigoMS) +'\n' + str(descripcionMS) +'"];}'
-
-    cadena = cadena + 'subgraph d1{m1[style ="filled", shape = note, fillcolor = orange, label = "\nA- NOMBRE \nB - Nombre  \nx-lugares prosperos para el cultivo"]; }'
-    # Finaliza el cierre de llaves del digraph
-    cadena = cadena + "}"
-    grafico.write(cadena)
-    grafico.close()
-
- 
 def graficar1():
     fila = int(filass)
     columna = int(columnass)

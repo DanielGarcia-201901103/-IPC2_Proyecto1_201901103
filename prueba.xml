@@ -23,8 +23,8 @@
             <columnas>14</columnas>
             <listadoCeldasVivas>
                 <celdaViva>
-                    <fila>9</fila>
-                    <columna>8</columna>
+                    <fila>11</fila>
+                    <columna>10</columna>
                     <codigoOrganismo>codigo or 1</codigoOrganismo>
                 </celdaViva>
                 <celdaViva>
@@ -33,8 +33,8 @@
                     <codigoOrganismo>codigo or 2</codigoOrganismo>
                 </celdaViva>
                 <celdaViva>
-                    <fila>11</fila>
-                    <columna>10</columna>
+                    <fila>9</fila>
+                    <columna>8</columna>
                     <codigoOrganismo>codigo or 3</codigoOrganismo>
                 </celdaViva>
                 <!-- ... -->
