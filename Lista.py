@@ -61,18 +61,23 @@ class Lista:
             if count == rec:
                 return nodoTemporal.dato
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    #OBTENER DATOS de las celdas vivas, cualquier valor
+    def getDatoCV(self, rec):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            if int(nodoTemporal.dato.getFilaCeldaViva()) == rec:
+                return nodoTemporal.dato
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     
-    #OBTENER DATOS DE LA LISTA DE CELDAS VIVAS PARA ENVIARLAS A LA TABLA
-    def getListaCViva(self):
-        nodoTemporal1 = Nodo("") 
-        nodoTemporal1 = self.first
-        while nodoTemporal1 != None:
-            # ingresar la cadena y agregar a la cadena el nombre del organismo y luego retornar la cadena para ingresarla al .dot
-
-            print("   | "+str(nodoTemporal1.dato.getFilaCeldaViva())+ "   | "+str(nodoTemporal1.dato.getColumnaCeldaViva())+ "      | "+str(nodoTemporal1.dato.getCodigoCeldaOrganismoVivo()))
-            #borrar el print
-            nodoTemporal1 = nodoTemporal1.after
-
+        #OBTENER DATOS DE Organismos
+    def getDatoOrga(self, rec):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            if nodoTemporal.dato.getCodigoOrganismo() == rec:
+                return nodoTemporal.dato.getNommbreOrganismo()
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     #ordenamiento funcionando
     def BubbleSort(self):
         if self.size > 1:

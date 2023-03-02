@@ -2,16 +2,28 @@
 <datosMarte>
     <listaOrganismos>
         <organismo>
-            <codigo>codigo 1</codigo>
+            <codigo>codigo or 1</codigo>
             <nombre>nombre 1</nombre>
         </organismo>
         <organismo>
-            <codigo>codigo 2</codigo>
+            <codigo>codigo or 2</codigo>
             <nombre>nombre 2</nombre>
         </organismo>
         <organismo>
-            <codigo>codigo 3</codigo>
+            <codigo>codigo or 3</codigo>
             <nombre>nombre 3</nombre>
+        </organismo>
+        <organismo>
+            <codigo>codigo or 1.1</codigo>
+            <nombre>nombre 1.1</nombre>
+        </organismo>
+        <organismo>
+            <codigo>codigo or 2.2</codigo>
+            <nombre>nombre 2.2</nombre>
+        </organismo>
+        <organismo>
+            <codigo>codigo or 3.3</codigo>
+            <nombre>nombre 3.3</nombre>
         </organismo>
         <!-- ... -->
     </listaOrganismos>

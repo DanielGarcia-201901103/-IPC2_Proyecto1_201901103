@@ -19,8 +19,6 @@ descripcionMS = ""
 lcv = Lista()
 
 # leer archivo xml
-
-
 def cargarArchivo():
     # contadores para saber las cantidades
     contadorCantidad_MaxOrganismo = 0
@@ -180,7 +178,7 @@ def graficar1():
         cadenaColumas = cadenaColumas + '<TD width= "35" height = "35">'+str(aum1)+"</TD>"
         aum1 += 1
     cadena = cadena + cadenaColumas +"</TR>" 
-
+    codiO = ""
     aum = 1
     cadenaFilas = ""
     while aum <= fila:  
@@ -190,8 +188,20 @@ def graficar1():
         cadenaColumas1 = ""
         # validar la entrada de la fila  de la celda viva
         while aum2 <= columna:
+            v = lcv.getDatoCV(aum)
+            if v != None:
+                if int(v.getColumnaCeldaViva()) == aum2: 
+                    #validar que cada vez que sea un diferente codigo entonces obtenga un color diferente
+                    #hacer la validacion que cada vez que tenga el codigo del organismo recorra la lista de organismos para obtener el nombre
+                    noOrganimo = lista_Organismos.getDatoOrga(str(v.getCodigoCeldaOrganismoVivo()))
+                    codiO = codiO + str(noOrganimo) + '\n'
+                    cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35">'+v.getCodigoCeldaOrganismoVivo() +'</TD>'
+                else:
+                    cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
+            elif v == None:
+                cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
+            # si la fila es igual a la fila en la lista de la celda viva entonces ingresar al if donde se evalua si la columna es igual a la columna donde se encuentra el dato
             #validar la entrada de la columna de la celda viva
-            cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
             aum2 += 1
         cadenaFilas = cadenaFilas + cadenaColumas1 +"</TR>" 
         aum += 1
@@ -205,7 +215,7 @@ def graficar1():
     grafo.node('muestra',datoM)
     grafo.edge('tabla'+':e', 'muestra', arrowhead = 'none')
 
-    datoMCV = 'Organismos \n asdf'
+    datoMCV = 'Organismos\n'+ codiO
 
     grafo.attr('node',style='', color='')
     grafo.attr('node', shape= 'rectangle', style="filled", color="black",fillcolor="lightsalmon")
@@ -256,10 +266,29 @@ guardar archivo ->con las muestras actualizadas con la misma estructura del arch
 Inicializacion -> cargar un archivo desde 0, si se carga y existen datos cargados anteriormente deben continuar existiendo y debe aumentar la informacion en el sistema
 
 
-Pasos de graficos
+Pasos de graficos Todo esto ya está funcionando
 1. CUANDO SE SELECCIONE LA MUESTRA GENERAR IMAGEN DE TABLA DEL TAMAÑO DE FILA Y COLUMNA CORRESPONDIENTE > Ya está funcionando
 2. Obtener codigo de muestra y descripcion de la muestra y mostrarlos al lado en un nodo -> Ya está funcionando
-3. Obtener fila, columna y codigo de organismo de la lista de celdas vivas
+3. Obtener fila, columna y codigo de organismo de la lista de celdas vivas 
 4. Comparar el codigo de organismo con el codigo de organismo almacenado en la lista de organismos, para obtener el nombre del organismo
 4. AGREGAR A LA TABLA LOS DATOS DE LAS CELDAS VIVAS DEL ORGANISMO QUE SELECIONÓ
+
+comenzar con las validaciones para que los organismos vivos prosperen
+practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
+validar horizontalmente
+ejemplo si tenemos la fila 8 y  columna 10
+mantener la fila y validar si en cualquier otra columna hay otro organismo del mismo tipo obtener la columna de ese organismo 
+y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
+validar verticalmente
+ejemplo si tenemos la fila 8 y  columna 10
+mantener la columna y validar si en cualquier otra fila hay otro organismo del mismo tipo obtener la fila de ese organismo 
+y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
+validar en diagonal 
+si fila -1 y columna +1 y fila debe ser mayor o igual a 1 columna deben ser menor o igual a tamaño de columnas de la muestra y tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
+si fila -1 y columna -1 y fila columna deben ser mayor o igual a 1 tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
+si fila +1 y columna -1 y fila debe ser menor o igual a tamaño de filas de la muestra y columna debe ser mayor o igual a 1
+si fila +1 y columna +1 y fila columna deben ser menor o igual a tamaño de MxN de la muestra
+si en cualquier otra fila o columna hay otro organismo del mismo tipo obtener la fila y columna de ese organismo 
+
+si un organismo no se puede alimentar entonces morirá
 """
