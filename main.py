@@ -1,3 +1,4 @@
+import random
 from tkinter import filedialog
 import sys
 from tkinter.messagebox import showerror, showinfo, showwarning
@@ -6,9 +7,11 @@ from Lista import Lista
 from organismo import Organismo
 from muestra import Muestra
 from celdaViva import CeldaViva
+from color import Color
 import graphviz
 
 # variables globales
+lista_Colores = Lista()
 lista_Organismos = Lista()
 lista_Muestras = Lista()
 
@@ -24,7 +27,6 @@ def cargarArchivo():
     contadorCantidad_MaxOrganismo = 0
     contadorMuestra = 0
     contadorCeldaV = 0
-
     # abre ventana para seleccionar archivo
     urlarchivo = filedialog.askopenfilename(
         initialdir="./", title="Seleccione un Archivo", filetypes=(("xml", "*.xml"), ("all files", "*.*")))
@@ -42,10 +44,12 @@ def cargarArchivo():
         # print(organismo_nombre.firstChild.data)
         if contadorCantidad_MaxOrganismo <= 1000:
             # enviando los parametros al objeto y enviando el objeto a la lista
-            objetoOrganismo = Organismo(
-                str(organismo_codigo.firstChild.data), str(organismo_nombre.firstChild.data))
-            # Agregando organismo a la lista de organismos
+            objetoOrganismo = Organismo(str(organismo_codigo.firstChild.data), str(organismo_nombre.firstChild.data))
+            colorS = "#"+''.join(random.choice('0123456789ABCDEF') for j in range(6))
+            objetoColor = Color(str(organismo_codigo.firstChild.data), str(colorS))
+            # Agregando organismo a la lista de organismos y agregando color al organismo
             lista_Organismos.addFinalNode(objetoOrganismo)
+            lista_Colores.addFinalNode(objetoColor)
         else:
             showerror(
                 title="Error", message="El tamaño maximo de organismos es: 1000 \nPorfavor ingrese menos organismos")
@@ -67,8 +71,7 @@ def cargarArchivo():
             celdaViva_codigoOrganismo = celdavivadoc.getElementsByTagName("codigoOrganismo")[
                 0]
             # .......enviando los parametros al objeto y enviando el objeto a la lista
-            objetoCeldaViva = CeldaViva(str(celdaViva_fila.firstChild.data), str(
-                celdaViva_columna.firstChild.data), str(celdaViva_codigoOrganismo.firstChild.data))
+            objetoCeldaViva = CeldaViva(str(celdaViva_fila.firstChild.data), str(celdaViva_columna.firstChild.data), str(celdaViva_codigoOrganismo.firstChild.data))
             # Agregando celda viva a la lista de celdas vivas
             if ((int(celdaViva_fila.firstChild.data) <= int(muestra_filas.firstChild.data)) and (int(celdaViva_columna.firstChild.data) <= int(muestra_columnas.firstChild.data))):
                 lista_CeldasVivas.addFinalNode(objetoCeldaViva)
@@ -79,8 +82,7 @@ def cargarArchivo():
 
         if ((int(muestra_filas.firstChild.data) <= 10000) and (int(muestra_columnas.firstChild.data) <= 10000)):
             # enviando los parametros al objeto y enviando el objeto a la lista
-            objetoMuestra = Muestra(str(muestra_codigo.firstChild.data), str(muestra_descripcion.firstChild.data), str(
-                muestra_filas.firstChild.data), str(muestra_columnas.firstChild.data), lista_CeldasVivas)
+            objetoMuestra = Muestra(str(muestra_codigo.firstChild.data), str(muestra_descripcion.firstChild.data), str(muestra_filas.firstChild.data), str(muestra_columnas.firstChild.data), lista_CeldasVivas)
             # Agregando muestra a la lista de muestras
             lista_Muestras.addFinalNode(objetoMuestra)
             contadorMuestra += 1
@@ -128,6 +130,7 @@ def menuListaMuestras():
             obteniendodatos(opcion2)
 
             graficar1()
+
             print("\n1. Ver prosperidad de cada organismo"+"\n2. Colocar organismo" + "\n3. Actualizar Muestra"+"\n4. Crear Muestra"+"\n5. Regresar")
             opcionMenu = int(input("Ingrese una opción: "))
             print()
@@ -178,7 +181,6 @@ def graficar1():
         cadenaColumas = cadenaColumas + '<TD width= "35" height = "35">'+str(aum1)+"</TD>"
         aum1 += 1
     cadena = cadena + cadenaColumas +"</TR>" 
-    codiO = ""
     aum = 1
     cadenaFilas = ""
     while aum <= fila:  
@@ -190,13 +192,12 @@ def graficar1():
         while aum2 <= columna:
             v = lcv.getDatoCV(aum, aum2)
             if v != None:
-                print("fila :"+str(aum) + "columna:" + str(v.getColumnaCeldaViva()))
                 if int(v.getColumnaCeldaViva()) == aum2: 
                     #validar que cada vez que sea un diferente codigo entonces obtenga un color diferente
-                    #hacer la validacion que cada vez que tenga el codigo del organismo recorra la lista de organismos para obtener el nombre
-                    noOrganimo = lista_Organismos.getDatoOrga(str(v.getCodigoCeldaOrganismoVivo()))
-                    codiO = codiO + str(noOrganimo) + '\n'
-                    cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35">'+v.getCodigoCeldaOrganismoVivo() +'</TD>'
+                    #hacer la validacion que cada vez que tenga el codigo del organismo recorra la lista de colores para obtener el color
+                    colordif = lista_Colores.getColorO(str(v.getCodigoCeldaOrganismoVivo()))
+
+                    cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35" BGCOLOR= "'+ str(colordif)+'"></TD>'
                 else:
                     cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
             elif v == None:
@@ -216,7 +217,7 @@ def graficar1():
     grafo.attr('node', shape= 'rectangle', style="filled", color="black",fillcolor="lightsalmon")
     grafo.node('muestra',datoM)
     grafo.edge('tabla'+':e', 'muestra', arrowhead = 'none')
-
+    codiO = lista_Organismos.getDatoNO()
     datoMCV = 'Organismos\n'+ codiO
 
     grafo.attr('node',style='', color='')

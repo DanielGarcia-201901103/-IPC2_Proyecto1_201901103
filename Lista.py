@@ -78,6 +78,26 @@ class Lista:
             if nodoTemporal.dato.getCodigoOrganismo() == rec:
                 return nodoTemporal.dato.getNommbreOrganismo()
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    
+    #OBTENER DATOS DE LISTA DE ORGANISMOS
+    def getDatoNO(self):
+        almacenar = ""
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            almacenar = almacenar + nodoTemporal.dato.getNommbreOrganismo()  + '\n'
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return almacenar
+
+    #Obtener colores para cada uno de los datos
+    def getColorO(self, reC):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            if nodoTemporal.dato.getCoColorOrganismo() == reC:
+                return nodoTemporal.dato.getNommbreColor()
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    
     #ordenamiento funcionando
     def BubbleSort(self):
         if self.size > 1:
@@ -107,7 +127,6 @@ class Lista:
                         j = j.after
                 if not cambio:
                     break
-
     #ordenamiento para las columnas pero manteniendo las filas intactas
     def BubbleSortC(self):
         if self.size > 1:
