@@ -188,8 +188,9 @@ def graficar1():
         cadenaColumas1 = ""
         # validar la entrada de la fila  de la celda viva
         while aum2 <= columna:
-            v = lcv.getDatoCV(aum)
+            v = lcv.getDatoCV(aum, aum2)
             if v != None:
+                print("fila :"+str(aum) + "columna:" + str(v.getColumnaCeldaViva()))
                 if int(v.getColumnaCeldaViva()) == aum2: 
                     #validar que cada vez que sea un diferente codigo entonces obtenga un color diferente
                     #hacer la validacion que cada vez que tenga el codigo del organismo recorra la lista de organismos para obtener el nombre
@@ -199,10 +200,11 @@ def graficar1():
                 else:
                     cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
             elif v == None:
-                cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'
+                cadenaColumas1 = cadenaColumas1 + '<TD width= "35" height = "35"> </TD>'  
             # si la fila es igual a la fila en la lista de la celda viva entonces ingresar al if donde se evalua si la columna es igual a la columna donde se encuentra el dato
             #validar la entrada de la columna de la celda viva
             aum2 += 1
+            
         cadenaFilas = cadenaFilas + cadenaColumas1 +"</TR>" 
         aum += 1
     cadena = cadena + cadenaFilas

@@ -39,6 +39,7 @@ class Lista:
             if count == rec:
                 listaTemporal = nodoTemporal.dato.listado_CVivas
                 listaTemporal.BubbleSort()
+                listaTemporal.BubbleSortC()
                 listaTemporal.recorrListaCViva()
 
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
@@ -62,14 +63,13 @@ class Lista:
                 return nodoTemporal.dato
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     #OBTENER DATOS de las celdas vivas, cualquier valor
-    def getDatoCV(self, rec):
+    def getDatoCV(self, rec, rec2): 
         nodoTemporal = Nodo("")
         nodoTemporal = self.first
         while nodoTemporal != None:
-            if int(nodoTemporal.dato.getFilaCeldaViva()) == rec:
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == rec) and (int(nodoTemporal.dato.getColumnaCeldaViva()) == rec2 ):
                 return nodoTemporal.dato
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
-    
         #OBTENER DATOS DE Organismos
     def getDatoOrga(self, rec):
         nodoTemporal = Nodo("")
@@ -88,6 +88,36 @@ class Lista:
                 cambio = False
                 while j != None:
                     if int(actual.dato.getFilaCeldaViva())> int(j.dato.getFilaCeldaViva()):
+                        cambio = True
+                        if i != None:
+                            tmp = j.after
+                            i.after = j
+                            j.after = actual
+                            actual.after = tmp
+                        else:
+                            tmp2 = j.after
+                            self.first = j
+                            j.after = actual
+                            actual.after = tmp2
+                        i = j
+                        j = actual.after
+                    else:
+                        i = actual
+                        actual = j
+                        j = j.after
+                if not cambio:
+                    break
+
+    #ordenamiento para las columnas pero manteniendo las filas intactas
+    def BubbleSortC(self):
+        if self.size > 1:
+            while True:
+                actual = self.first
+                i = None  # anterior
+                j = self.first.after  # siguiente
+                cambio = False
+                while j != None:
+                    if (int(actual.dato.getColumnaCeldaViva())> int(j.dato.getColumnaCeldaViva())) and (int(actual.dato.getFilaCeldaViva())== int(j.dato.getFilaCeldaViva())):
                         cambio = True
                         if i != None:
                             tmp = j.after
