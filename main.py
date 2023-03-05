@@ -97,7 +97,23 @@ def cargarArchivo():
     # lista_Muestras.printList()
 
 
-def prosperidad():
+def prosperidad(opcionMuestra):
+    fila = int(filass)
+    columna = int(columnass)
+    print("\nLos organismos prosperan en las siguientes coordenadas\n")
+    contaFila = 1
+    contaColumna = 1
+    
+    while contaFila<= fila: 
+        while contaColumna <= columna:
+            recor = lcv.getDatoCV(contaFila, contaColumna)
+            if recor != None:
+                if int(recor.getColumnaCeldaViva()) == contaColumna: 
+                    pass
+            contaColumna +=1
+        contaFila +=1
+
+    
     """
 comenzar con las validaciones para que los organismos vivos prosperen
 practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
@@ -125,8 +141,81 @@ def colocarOrganismo():
 
 
 def actualizarMuestra():
-    pass
+    
+    print("\n-------Actualizar Muestra --------\n")
+    # mostrar el listado de las muestras y elegir una opcion
+    lista_Muestras.printListMuestra()
+    # recibe la opcion ingresada y la guarda como entero
+    opcion3 = int(input("\nIngrese el número de la muestra a Actualizar: "))
+    print()
+    #obtiene los datos de la lista de muestras
+    ac = lista_Muestras.getDatoC(opcion3)
 
+    while True:
+        try:
+            #preguntar al usuario que datos desea actualizar
+            print("\n1. Tamaño de la muestra"+"\n2. Codigo de Muestra"+"\n3. Descripción de Muestra" + "\n4. Lista de celdas vivas"+"\n5. Regresar\n")
+            opcionActualizar = int(input("Ingrese una opción: "))
+            print()
+            if opcionActualizar == 1:
+                #   si desea actualizar el tamaño de la muestra (matriz)
+                opcionFila = int(input("\nIngrese el tamaño de filas: "))
+                ac.setFilasMuestra(str(opcionFila))
+                opcionColumna = int(input("\nIngrese el tamaño de columnas: "))
+                if (opcionFila <= 10000) and (opcionColumna <= 10000):
+                    ac.setFilasMuestra(str(opcionFila))
+                    ac.setColumnasMuestra(str(opcionColumna))
+                    print("Fila y Columna editado correctamente")
+                else:
+                    print("\nFila o Columna supera el valor maximo de 10000, por favor ingrese los datos con una cantidad menor.")
+            elif opcionActualizar == 2:
+                # codigo de la Muestra
+                opcionCodigo= (input("\nIngrese el nuevo codigo: "))
+                ac.setCodigoMuestra(opcionCodigo)
+            elif opcionActualizar == 3:
+                # Descripcion de la muestra
+                opcionDescripcion= (input("\nIngrese la nueva descripcion: "))
+                ac.setDescripcionMuestra(opcionDescripcion)
+            elif opcionActualizar == 4:
+                print("\n------- Lista de Celdas Vivas --------\n")
+                # si desea editar la lista de celdas vivas entonces mostrar la lista de celdas vivas 
+                lista_Muestras.recorrListMuestra(opcion3)
+                # seleccione el dato a editar
+                opcionListaCV = int(input("\nIngrese el número de la celda viva a Actualizar: "))
+                #         obtener el dato a editar
+                cv = ac.listado_CVivas
+                poderEditar = cv.getDatoC(opcionListaCV)
+                #         buscar el dato a editar y enviar los nuevos datos
+                opcionPFila = int(input("\nIngrese la posición de la fila: "))
+                opcionPColumna = int(input("\nIngrese la posición de la columna: "))
+                validacionBooleana = cv.actualizandoLCeldasVivas(opcionPFila, opcionPColumna)
+                if validacionBooleana == False:
+                    if (opcionPFila <= int(ac.getFilasMuestra())) and (opcionPColumna <= opcionPColumna):
+                        poderEditar.setFilaCeldaViva(str(opcionPFila))
+                        poderEditar.setColumnaCeldaViva(str(opcionPColumna))
+                        print("\nFila y Columna editado correctamente\n")
+                    else: 
+                        print("\nFila o Columna supera el valor del tamaño de la matriz, por favor ingrese los datos con una cantidad menor.")
+                elif validacionBooleana == True:
+                    print("\nPor favor no ingrese posiciones en las cuales ya existe otro organismo")
+                validarSN = input("\nPara editar el codigo, escriba si de lo contrario escriba no:")
+                if validarSN.lower() == "si":
+                    opcionCodigoCV= input("\nIngrese el nuevo codigo: ")
+                    validacionBooleana1 = lista_Organismos.actualizandoCodigoCV(opcionCodigoCV)
+                    if validacionBooleana1 == True:
+                        poderEditar.setCodigoCeldaOrganismoVivo(opcionCodigoCV)
+                    elif validacionBooleana1 == False:
+                        print("\nPor favor no ingrese codigo que no exista en la lista de organismos")
+                elif validarSN.lower() == "no":
+                    print("\nCodigo no editado")
+                else:
+                    pass
+            elif opcionActualizar == 5:
+                break
+            else:
+                print("\nIngrese una opcion correcta")
+        except ValueError:
+            print("\nPor favor ingrese solo numeros") 
 
 def crearMuestra():
     pass
@@ -135,23 +224,23 @@ def crearMuestra():
 def menuListaMuestras():
     while True:
         try:
-            print("\n------- Menu Lista de Muestras --------")
-            print("1. Elegir muestra y graficar"+"\n2. Ver prosperidad"+"\n3. Colocar organismo" + "\n4. Actualizar Muestra"+"\n5. Crear Muestra"+"\n6. Regresar")
+            print("\n------- Menu Lista de Muestras --------\n")
+            # mostrar el listado de las muestras y elegir una opcion
+            lista_Muestras.printListMuestra()
+            # recibe la opcion ingresada y la guarda como entero
+            opcion2 = int(input("\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
+            print()
+            print("\n------- Lista de Celdas Vivas --------\n")
+            lista_Muestras.recorrListMuestra(opcion2)
+            obteniendodatos(opcion2)
+
+            print("\n1. Graficar"+"\n2. Ver prosperidad"+"\n3. Colocar organismo" + "\n4. Actualizar Muestra"+"\n5. Crear Muestra"+"\n6. Regresar\n")
             opcionMenu = int(input("Ingrese una opción: "))
             print()
             if opcionMenu == 1:
-                # mostrar el listado de las muestras y elegir una opcion
-                lista_Muestras.printListMuestra()
-                # recibe la opcion ingresada y la guarda como entero
-                opcion2 = int(input(
-                    "\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
-                print()
-                print("\n------- Lista de Celdas Vivas --------\n")
-                lista_Muestras.recorrListMuestra(opcion2)
-                obteniendodatos(opcion2)
                 graficar1()
             elif opcionMenu == 2:
-                prosperidad()
+                prosperidad(opcion2)
             elif opcionMenu == 3:
                 colocarOrganismo()
             elif opcionMenu == 4:

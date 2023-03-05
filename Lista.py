@@ -160,3 +160,24 @@ class Lista:
                         j = j.after
                 if not cambio:
                     break
+
+    #METODOS PARA LA ACTUALIZACIÓN DE DATOS VALIDACIONES
+    def actualizandoLCeldasVivas(self, fil, col):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        val = False
+        while nodoTemporal != None:
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == fil) and (int(nodoTemporal.dato.getColumnaCeldaViva()) == col) :
+                val = True
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return val
+    
+    def actualizandoCodigoCV(self, codigoA):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        val = False
+        while nodoTemporal != None:
+            if (str(nodoTemporal.dato.getCodigoOrganismo().lower()) == codigoA.lower()) :
+                val = True
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return val
