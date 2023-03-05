@@ -46,7 +46,7 @@ def cargarArchivo():
             # enviando los parametros al objeto y enviando el objeto a la lista
             objetoOrganismo = Organismo(str(organismo_codigo.firstChild.data), str(organismo_nombre.firstChild.data))
             colorS = "#"+''.join(random.choice('0123456789ABCDEF') for j in range(6))
-            objetoColor = Color(str(organismo_codigo.firstChild.data), str(colorS))
+            objetoColor = Color(str(organismo_codigo.firstChild.data), str(colorS), str(organismo_nombre.firstChild.data))
             # Agregando organismo a la lista de organismos y agregando color al organismo
             lista_Organismos.addFinalNode(objetoOrganismo)
             lista_Colores.addFinalNode(objetoColor)
@@ -98,7 +98,26 @@ def cargarArchivo():
 
 
 def prosperidad():
-    pass
+    """
+comenzar con las validaciones para que los organismos vivos prosperen
+practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
+validar horizontalmente
+ejemplo si tenemos la fila 8 y  columna 10
+mantener la fila y validar si en cualquier otra columna hay otro organismo del mismo tipo obtener la columna de ese organismo 
+y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
+validar verticalmente
+ejemplo si tenemos la fila 8 y  columna 10
+mantener la columna y validar si en cualquier otra fila hay otro organismo del mismo tipo obtener la fila de ese organismo 
+y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
+validar en diagonal 
+si fila -1 y columna +1 y fila debe ser mayor o igual a 1 columna deben ser menor o igual a tamaño de columnas de la muestra y tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
+si fila -1 y columna -1 y fila columna deben ser mayor o igual a 1 tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
+si fila +1 y columna -1 y fila debe ser menor o igual a tamaño de filas de la muestra y columna debe ser mayor o igual a 1
+si fila +1 y columna +1 y fila columna deben ser menor o igual a tamaño de MxN de la muestra
+si en cualquier otra fila o columna hay otro organismo del mismo tipo obtener la fila y columna de ese organismo 
+
+si un organismo no se puede alimentar entonces morirá
+"""
 
 
 def colocarOrganismo():
@@ -116,33 +135,30 @@ def crearMuestra():
 def menuListaMuestras():
     while True:
         try:
-            print("\n------- Menu Lista de Muestras --------\n")
-            # mostrar el listado de las muestras y elegir una opcion
-            lista_Muestras.printListMuestra()
-
-            # recibe la opcion ingresada y la guarda como entero
-
-            opcion2 = int(input(
-                "\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
-            print()
-            print("\n------- Lista de Celdas Vivas --------\n")
-            lista_Muestras.recorrListMuestra(opcion2)
-            obteniendodatos(opcion2)
-
-            graficar1()
-
-            print("\n1. Ver prosperidad de cada organismo"+"\n2. Colocar organismo" + "\n3. Actualizar Muestra"+"\n4. Crear Muestra"+"\n5. Regresar")
+            print("\n------- Menu Lista de Muestras --------")
+            print("1. Elegir muestra y graficar"+"\n2. Ver prosperidad"+"\n3. Colocar organismo" + "\n4. Actualizar Muestra"+"\n5. Crear Muestra"+"\n6. Regresar")
             opcionMenu = int(input("Ingrese una opción: "))
             print()
             if opcionMenu == 1:
-                prosperidad()
+                # mostrar el listado de las muestras y elegir una opcion
+                lista_Muestras.printListMuestra()
+                # recibe la opcion ingresada y la guarda como entero
+                opcion2 = int(input(
+                    "\nPara ver la lista de celdas vivas.\nIngrese el número que corresponde a la muestra: "))
+                print()
+                print("\n------- Lista de Celdas Vivas --------\n")
+                lista_Muestras.recorrListMuestra(opcion2)
+                obteniendodatos(opcion2)
+                graficar1()
             elif opcionMenu == 2:
-                colocarOrganismo()
+                prosperidad()
             elif opcionMenu == 3:
-                actualizarMuestra()
+                colocarOrganismo()
             elif opcionMenu == 4:
-                crearMuestra()
+                actualizarMuestra()
             elif opcionMenu == 5:
+                crearMuestra()
+            elif opcionMenu == 6:
                 break
             else:
                 print("Ingrese una opcion correcta")
@@ -217,11 +233,19 @@ def graficar1():
     grafo.attr('node', shape= 'rectangle', style="filled", color="black",fillcolor="lightsalmon")
     grafo.node('muestra',datoM)
     grafo.edge('tabla'+':e', 'muestra', arrowhead = 'none')
-    codiO = lista_Organismos.getDatoNO()
-    datoMCV = 'Organismos\n'+ codiO
 
+    #Tabla para mostrar los colores de cada uno de los datos
+    cadenaA = '''<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" ALIGN="CENTER"> 
+            <TR>
+                <TD COLSPAN="2" BGCOLOR="YELLOW" width= "35" height = "35"><b>Organismos</b></TD>
+            </TR>
+            '''
+    codiO = lista_Colores.getDatoNOCO()
+    datoMCV = cadenaA + codiO
+    datoMCV = datoMCV + '</TABLE>>'
     grafo.attr('node',style='', color='')
-    grafo.attr('node', shape= 'rectangle', style="filled", color="black",fillcolor="lightsalmon")
+    grafo.attr('node', shape= 'plaintext')
     grafo.node('cv',datoMCV)
     grafo.edge('tabla'+':e', 'cv', arrowhead = 'none')
     #grafo.save(filename= "tabla.dot", directory="./Practica1") #,directory="Practica1\tabla.dot"
@@ -261,37 +285,4 @@ if __name__ == '__main__':
                 print("Ingrese una opcion correcta")
         except ValueError:
             print("\nPor favor ingrese solo numeros")
-"""
-seleccionar muestra -> colocar algun organismo de la muestra -> validar la forma en que cambia la muestra e indicar cuando la muestra ya no puede ser modificada
-actualizar-> informacion de la muestra 
-crear -> muestra con los cambios introducidos
-guardar archivo ->con las muestras actualizadas con la misma estructura del archivo de entrada
-Inicializacion -> cargar un archivo desde 0, si se carga y existen datos cargados anteriormente deben continuar existiendo y debe aumentar la informacion en el sistema
 
-
-Pasos de graficos Todo esto ya está funcionando
-1. CUANDO SE SELECCIONE LA MUESTRA GENERAR IMAGEN DE TABLA DEL TAMAÑO DE FILA Y COLUMNA CORRESPONDIENTE > Ya está funcionando
-2. Obtener codigo de muestra y descripcion de la muestra y mostrarlos al lado en un nodo -> Ya está funcionando
-3. Obtener fila, columna y codigo de organismo de la lista de celdas vivas 
-4. Comparar el codigo de organismo con el codigo de organismo almacenado en la lista de organismos, para obtener el nombre del organismo
-4. AGREGAR A LA TABLA LOS DATOS DE LAS CELDAS VIVAS DEL ORGANISMO QUE SELECIONÓ
-
-comenzar con las validaciones para que los organismos vivos prosperen
-practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
-validar horizontalmente
-ejemplo si tenemos la fila 8 y  columna 10
-mantener la fila y validar si en cualquier otra columna hay otro organismo del mismo tipo obtener la columna de ese organismo 
-y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
-validar verticalmente
-ejemplo si tenemos la fila 8 y  columna 10
-mantener la columna y validar si en cualquier otra fila hay otro organismo del mismo tipo obtener la fila de ese organismo 
-y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
-validar en diagonal 
-si fila -1 y columna +1 y fila debe ser mayor o igual a 1 columna deben ser menor o igual a tamaño de columnas de la muestra y tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
-si fila -1 y columna -1 y fila columna deben ser mayor o igual a 1 tienen un organismo del mismo tipo validar que exista otro organismo de otro tipo para poder alimentarse
-si fila +1 y columna -1 y fila debe ser menor o igual a tamaño de filas de la muestra y columna debe ser mayor o igual a 1
-si fila +1 y columna +1 y fila columna deben ser menor o igual a tamaño de MxN de la muestra
-si en cualquier otra fila o columna hay otro organismo del mismo tipo obtener la fila y columna de ese organismo 
-
-si un organismo no se puede alimentar entonces morirá
-"""

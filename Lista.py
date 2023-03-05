@@ -79,13 +79,17 @@ class Lista:
                 return nodoTemporal.dato.getNommbreOrganismo()
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
     
-    #OBTENER DATOS DE LISTA DE ORGANISMOS
-    def getDatoNO(self):
+    #OBTENER DATOS DE LISTA DE cOLORES
+    def getDatoNOCO(self):
         almacenar = ""
         nodoTemporal = Nodo("")
         nodoTemporal = self.first
         while nodoTemporal != None:
-            almacenar = almacenar + nodoTemporal.dato.getNommbreOrganismo()  + '\n'
+            almacenar = almacenar + '''<TR>
+                <TD BGCOLOR="''' +nodoTemporal.dato.getNommbreColor()+'''" width= "35" height = "35"></TD>
+                <TD width= "35" height = "35">'''+nodoTemporal.dato.getNombreORGANISMO()+ '''</TD>
+            </TR>
+            '''
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
         return almacenar
 
