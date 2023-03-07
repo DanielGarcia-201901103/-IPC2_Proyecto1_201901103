@@ -107,7 +107,7 @@ def cargarArchivo():
 def prosperidad(opcionMuestra):
     print("\nLos organismos prosperan en las siguientes coordenadas\n")
     # Validar para cuando sea horizontal
-    lcv.validandoHorizontal(int(filass), int(columnass), lcv)
+    #lcv.validandoHorizontal(int(filass), int(columnass), lcv)
     """
 comenzar con las validaciones para que los organismos vivos prosperen
 practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
@@ -460,6 +460,7 @@ def guardarArchivo():
             contadorOr1 += 1
 
         # Crea el archivo con los datos del arbol xml
+        ET.indent(root) # agrega los espacios para que no sea todo en una sola linea
         archivoXml = ET.ElementTree(root)
         archivoXml.write(ruta + '.xml')
         print("\nArchivo guardado exitosamente\n")
