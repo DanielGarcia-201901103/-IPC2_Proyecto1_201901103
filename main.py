@@ -168,7 +168,7 @@ def colocarOrganismo():
             if (opcionPFila <= int(ac.getFilasMuestra())) and (opcionPColumna <= int(ac.getColumnasMuestra())):
                 #crear objeto y agregarlo a la lista de celdas vivas
                 objetoCeldaViva = CeldaViva(str(opcionPFila).strip(), str(opcionPColumna).strip(), str(opcionCodigoCV).strip() )
-                ac.listado_CVivas.addFinalNode(objetoCeldaViva)
+                ac.listado_CVivas.insertarOrden(objetoCeldaViva)
                 print("\nDatos ingresados correctamente\n")
             else:
                 print("\nFila o Columna supera el valor del tamaño de la matriz, por favor ingrese los datos con una cantidad menor.\n O elcodigo no se encuentra entre los datos")
@@ -517,4 +517,4 @@ if __name__ == '__main__':
 
 
 #CORREGIR ERROR DE ORDENAMIENTO BURBUJA
-#SOLAMENTE FALTA LAS VALIDACIONES EN HORIZONTAL, VERTICAL, DIAGONAL Y TERMINAR LA DOCUMENTACION
+#SOLAMENTE FALTA LAS VALIDACIONES EN HORIZONTAL, VERTICAL, DIAGONAL

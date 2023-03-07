@@ -14,7 +14,7 @@ class Lista:
             self.final = newNodo #el apuntador ultimo apunta al nuevo nodo
         else: #si la lista ya tiene uno o mas datos se agrega el nuevo nodo
             self.final.after = newNodo #el apuntador siguiente apunta al nuevo nodo --->
-            newNodo.before = self.final #el apuntador anterior apunta al nodo anterior  <---
+            #newNodo.before = self.final #el apuntador anterior apunta al nodo anterior  <---
             self.final = newNodo #el apuntador ultimo apunta al nuevo nodo
     
     #Imprime la lista de muestras , no imprime las celdas vivas
@@ -114,8 +114,8 @@ class Lista:
                     if int(actual.dato.getFilaCeldaViva())> int(j.dato.getFilaCeldaViva()):
                         cambio = True
                         if i != None:
-                            tmp = j.after
-                            i.after = j
+                            tmp = j.after #SIGUIENTE SE GUARDA EN TEMPORAL
+                            i.after = j  # 
                             j.after = actual
                             actual.after = tmp
                         else:
@@ -160,7 +160,32 @@ class Lista:
                         j = j.after
                 if not cambio:
                     break
-    
+    #INSERTANDO EN ORDEN
+    def insertarOrden(self, dato):
+        newNodo = Nodo(dato) # se crea un nuevo nodo
+        #si la lista está vacia
+        self.size += 1
+        if self.first == None: #si la lista no tiene ningun dato
+            self.first = newNodo #el apuntador primero apunta al nuevo nodo
+            #self.final = newNodo #el apuntador ultimo apunta al nuevo nodo
+        #si el dato de entrada es menor al dato anterior    
+        elif (newNodo.dato.getFilaCeldaViva() < self.first.dato.getFilaCeldaViva()): 
+            newNodo.after = self.first
+            self.first = newNodo
+        else:
+            anterior1 = Nodo("")
+            p = Nodo("")
+            anterior1 = self.first
+            p = self.first
+            while (p.after != None) and (newNodo.dato.getFilaCeldaViva() > p.dato.getFilaCeldaViva()):
+                anterior1 = p
+                p = p.after
+            if (newNodo.dato.getFilaCeldaViva()> p.dato.getFilaCeldaViva()):
+                anterior1 = p
+            newNodo.after = anterior1.after
+            anterior1.after = newNodo
+        return self
+
     #METODOS PARA VALIDACIONES DE PROSPERAR
     def validandoHorizontal(self, totalFilas, totalColumnas, lcv):
         nodoTemporal = Nodo("")
