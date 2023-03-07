@@ -500,15 +500,14 @@ if __name__ == '__main__':
                 if validarVacia1 == True:
                     guardarArchivo()
                 elif validarVacia1 == False:
-                    print(
-                        "Por favor cargue un archivo ya que no hay datos para procesar")
+                    print("Por favor cargue un archivo ya que no hay datos para procesar")
             elif opcion == 4:
                 validarVacia2 = lista_Muestras.ValidarListaVacia()
                 if validarVacia2 == True:
                     inicializacion()
+                    print("Datos eliminados correctamente")
                 elif validarVacia2 == False:
-                    print(
-                        "Por favor cargue un archivo ya que no hay datos para procesar")
+                    print("Por favor cargue un archivo ya que no hay datos para procesar")
             elif opcion == 5:
                 sys.exit()
             else:
