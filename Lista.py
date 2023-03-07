@@ -160,7 +160,65 @@ class Lista:
                         j = j.after
                 if not cambio:
                     break
+    
+    #METODOS PARA VALIDACIONES DE PROSPERAR
+    def validandoHorizontal(self, totalFilas, totalColumnas, lcv):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            # mantiene la lista para seguirla recorriendo como auxiliar
+            listaAuxiliar = lcv 
+            #enviando a la lista auxiliar la posición actual que se está recorriendo 
+            listaAuxiliar.validandoRepetidos(nodoTemporal.dato.getFilaCeldaViva(),nodoTemporal.dato.getColumnaCeldaViva(), nodoTemporal.dato.getCodigoCeldaOrganismoVivo())
 
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+
+    def validandoRepetidos(self, filaActual, columnaActual, codigoCVActual):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        while nodoTemporal != None:
+            #valida que si es la posición actual la que se está recorriendo entonces pasa al siguiente dato de la lista
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == int(filaActual)) and (int(nodoTemporal.dato.getColumnaCeldaViva()) == int(columnaActual) and (nodoTemporal.dato.getCodigoCeldaOrganismoVivo() == codigoCVActual)):
+                #pasa al siguiente dato de la lista
+                nodoTemporal = nodoTemporal.after
+            # valida que si el siguiente esta en la misma fila pero en diferente columna y si el codigo es el mismo
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == int(filaActual)) and (int(nodoTemporal.dato.getColumnaCeldaViva()) != int(columnaActual)and ((nodoTemporal.dato.getCodigoCeldaOrganismoVivo() == codigoCVActual))):
+                #valida que el codigo sea el mismo, 
+                #cuando sea la misma fila, pero diferente columna validar si el codigo es el mismo y almacenarlo en una lista de iguales
+                listaIguales = Lista()
+                #enviar un objeto donde se almacene las posiciones de las columnas, actual y el siguiente
+                #si la resta entre la columna siguiente y la actual es mayor que 1 entonces almacenar la ultima coincidencia
+                resta = int(columnaActual)- int(nodoTemporal.dato.getColumnaCeldaViva())
+                if resta > 1:
+                    listaIguales.addFinalNode(int(nodoTemporal.dato.getColumnaCeldaViva()))
+                elif resta == 1:
+                    #el dato muere ya que no hay otro dato dentro del rango
+                    datoVive = "Muere"
+            # valida que si el siguiente esta en la misma fila pero en diferente columna y si el codigo es diferente
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == int(filaActual)) and (int(nodoTemporal.dato.getColumnaCeldaViva()) != int(columnaActual)and ((nodoTemporal.dato.getCodigoCeldaOrganismoVivo() != codigoCVActual))):
+                #si la posición de este codigo se encuentra entre la posición del los otros codigos entonces convertir este dato en el otro codigo
+
+                pass
+            '''
+            revisar bien todo el codigo anterior ya que algo no funciona
+            primero se esta validando que todos los datos sean iguales, entonces los omita
+            si fila permanece y columna no es igual y codigo es el mismo se tiene el mismo organismo entonces almacenar en una lista con datos iguales
+            si fila permanece y columna no es igual y codigo no es el mismo y recorriendo la lista de datos iguales se verifica que este dato se encuentre entre la primera coincidencia y la segunda coincidencia de los datos que son iguales, entonces este dato se convierte igual a los otros. 
+            '''  
+            
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+    #METODO PARA DEJAR VACÍA LA LISTA
+    def vaciarLista(self):
+        self.first = None
+        self.final = None
+    def ValidarListaVacia(self):
+        #si la lista No está vacía devuelve True
+        if self.first != None:
+            return True
+        #Si la lista está Vacia devuelve False
+        if self.first == None:
+            return False
+        
     #METODOS PARA LA ACTUALIZACIÓN DE DATOS VALIDACIONES
     def actualizandoLCeldasVivas(self, fil, col):
         nodoTemporal = Nodo("")

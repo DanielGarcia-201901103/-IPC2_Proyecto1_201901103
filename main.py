@@ -3,6 +3,7 @@ from tkinter import filedialog
 import sys
 from tkinter.messagebox import showerror, showinfo, showwarning
 from xml.dom import minidom
+import xml.etree.cElementTree as ET
 from Lista import Lista
 from organismo import Organismo
 from muestra import Muestra
@@ -20,7 +21,7 @@ columnass = 0
 codigoMS = ""
 descripcionMS = ""
 lcv = Lista()
-
+coordenadas = Lista() # almacena las coordenadas donde prosperan los datos
 # leer archivo xml
 def cargarArchivo():
     # contadores para saber las cantidades
@@ -98,22 +99,9 @@ def cargarArchivo():
 
 
 def prosperidad(opcionMuestra):
-    fila = int(filass)
-    columna = int(columnass)
     print("\nLos organismos prosperan en las siguientes coordenadas\n")
-    contaFila = 1
-    contaColumna = 1
-    
-    while contaFila<= fila: 
-        while contaColumna <= columna:
-            recor = lcv.getDatoCV(contaFila, contaColumna)
-            if recor != None:
-                if int(recor.getColumnaCeldaViva()) == contaColumna: 
-                    pass
-            contaColumna +=1
-        contaFila +=1
-
-    
+    #Validar para cuando sea horizontal
+    lcv.validandoHorizontal(int(filass),int(columnass), lcv)
     """
 comenzar con las validaciones para que los organismos vivos prosperen
 practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
@@ -121,6 +109,14 @@ validar horizontalmente
 ejemplo si tenemos la fila 8 y  columna 10
 mantener la fila y validar si en cualquier otra columna hay otro organismo del mismo tipo obtener la columna de ese organismo 
 y tambien validar que si hay algun otro organismo dentro de este rango entonces la muestra vuelve a cambiar y ahora todos los organismos dentro de este rango se convierten en el otro organismo, solo se envia el codigo y nombre con los setter a sustituir los datos de ese organismo
+    """
+    #recorrido para validar cuando sea vertical
+
+    #recorrido para validar cuando sea en diagonal
+"""
+comenzar con las validaciones para que los organismos vivos prosperen
+practicamente obtener la fila y la columna en la que se encuentra el organismo y hacer lo siguiente
+
 validar verticalmente
 ejemplo si tenemos la fila 8 y  columna 10
 mantener la columna y validar si en cualquier otra fila hay otro organismo del mismo tipo obtener la fila de ese organismo 
@@ -342,10 +338,42 @@ def graficar1():
     grafo.view(filename ="matriz.dot")
 
 def guardarArchivo():
-    pass
+    #https://www.youtube.com/watch?v=_HZvI4yxBT0
+
+
+    guardar = filedialog.asksaveasfilename(
+        initialdir="./", title="Guardar Como", filetypes=(("Archivos xml", "*.xml"), ("all files", "*.*")))
+    ruta = str(guardar)
+    print(ruta)
+
+    #dato raíz
+    root = ET.Element('datosMarte')
+    #dato hijo
+    lOrganismos = ET.SubElement(root, 'listaOrganismos')
+    #agrega un dato hijo al hijo
+    datoOrganismo = ET.SubElement(lOrganismos, 'organismo')
+    #crear un recorrido que obtenga cada dato del la lista de organismos
+
+    ET.SubElement(datoOrganismo,'codigo').text= "valor agregar de la lista"
+    ET.SubElement(datoOrganismo,'nombre').text= "valor agregar de la lista"
+
+
+    #dato hijo
+    lMuestras = ET.SubElement(root, 'listadoMuestras')
+    lmuestra = ET.SubElement(lMuestras, 'muestra')
+
+    lCeldaVivas = ET.SubElement(lmuestra,'listadoCeldasVivas')
+
+
+    #Crea el archivo con los datos del arbol xml
+    archivoXml = ET.ElementTree(root)
+    archivoXml.write(ruta + '.xml')
 
 def inicializacion():
-    pass
+    lista_Colores.vaciarLista()
+    lista_Organismos.vaciarLista()
+    lista_Muestras.vaciarLista()
+    lcv.vaciarLista()
 
 if __name__ == '__main__':
     while True:
@@ -363,15 +391,26 @@ if __name__ == '__main__':
             if opcion == 1:
                 cargarArchivo()
             elif opcion == 2:
-                menuListaMuestras()
+                validarVacia = lista_Muestras.ValidarListaVacia()
+                if validarVacia == True:
+                    menuListaMuestras()
+                elif validarVacia ==False:
+                    print("Por favor cargue un archivo ya que no hay datos para procesar")
             elif opcion == 3:
-                guardarArchivo()
+                validarVacia1 = lista_Muestras.ValidarListaVacia()
+                if validarVacia1 == True:
+                    guardarArchivo()
+                elif validarVacia1 ==False:
+                    print("Por favor cargue un archivo ya que no hay datos para procesar")
             elif opcion == 4:
-                inicializacion()
+                validarVacia2 = lista_Muestras.ValidarListaVacia()
+                if validarVacia2 == True:
+                    inicializacion()
+                elif validarVacia2 ==False:
+                    print("Por favor cargue un archivo ya que no hay datos para procesar")
             elif opcion == 5:
                 sys.exit()
             else:
                 print("Ingrese una opcion correcta")
         except ValueError:
             print("\nPor favor ingrese solo numeros")
-
