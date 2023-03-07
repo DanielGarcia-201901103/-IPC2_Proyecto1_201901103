@@ -38,8 +38,8 @@ class Lista:
             count +=1
             if count == rec:
                 listaTemporal = nodoTemporal.dato.listado_CVivas
-                listaTemporal.BubbleSort()
-                listaTemporal.BubbleSortC()
+                #listaTemporal.BubbleSort()
+                #listaTemporal.BubbleSortC()
                 listaTemporal.recorrListaCViva()
 
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
@@ -218,7 +218,19 @@ class Lista:
         #Si la lista está Vacia devuelve False
         if self.first == None:
             return False
-        
+
+    #METODO PARA AGREGAR DATOS A LA ESCRITURA DEL XML
+    def agregarEscrituraOrganismo(self,contadorOr, boleanoOrganismo):
+        count = 0
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        boleanoOrganismo = False
+        while nodoTemporal != None:
+            count +=1
+            if count == contadorOr:
+                return nodoTemporal.dato
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return boleanoOrganismo
     #METODOS PARA LA ACTUALIZACIÓN DE DATOS VALIDACIONES
     def actualizandoLCeldasVivas(self, fil, col):
         nodoTemporal = Nodo("")
@@ -230,6 +242,36 @@ class Lista:
             nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
         return val
     
+    #METODOS PARA EL INGRESO DE DATOS VALIDACIONES
+    def ingresandoLCeldasVivas(self, fil, col):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        val = False
+        while nodoTemporal != None:
+            if (int(nodoTemporal.dato.getFilaCeldaViva()) == fil) and (int(nodoTemporal.dato.getColumnaCeldaViva()) == col):
+                val = True
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return val
+    def validandoCodigoIgual(self, recibiendoCodigo):
+        nodoTemporal = Nodo("")
+        nodoTemporal = self.first
+        val1 = False
+        while nodoTemporal != None:
+            if (str(nodoTemporal.dato.getCodigoCeldaOrganismoVivo()) == str(recibiendoCodigo)):
+                val1 = True
+            nodoTemporal = nodoTemporal.after #pasa al siguiente nodo de la lista
+        return val1
+    
+    def recorrListaCViva1(self):
+        print("No. | Fila | Columna | Codigo Organismo"  )
+        count1 = 0
+        nodoTemporal1 = Nodo("")
+        nodoTemporal1 = self.first
+        while nodoTemporal1 != None:
+            count1 +=1
+            print(str(count1)+ "   | "+str(nodoTemporal1.dato.getFilaCeldaViva())+ "   | "+str(nodoTemporal1.dato.getColumnaCeldaViva())+ "      | "+str(nodoTemporal1.dato.getCodigoCeldaOrganismoVivo()))
+            nodoTemporal1 = nodoTemporal1.after
+
     def actualizandoCodigoCV(self, codigoA):
         nodoTemporal = Nodo("")
         nodoTemporal = self.first
